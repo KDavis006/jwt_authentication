@@ -3,7 +3,7 @@ import { cookies } from "next/headers";
 import { NextRequest, NextResponse } from "next/server";
 
 // Make secret
-const secretKey = "secret";
+const secretKey = process.env.SESSION_SECRET;
 const key = new TextEncoder().encode(secretKey);
 
 // Encrypt your data
@@ -24,7 +24,7 @@ export async function decrypt(input: string) : Promise<any> {
 export async function login(formData: FormData) {
   // Verify credentials && get the user
 
-  const user = { email: formData.get("email"), password: formData.get("password"), name: "John" };
+  const user = { username: formData.get("username"), password: formData.get("password"), name: formData.get("name") };
 
   // Create the session
   const expires = new Date(Date.now() + 10 * 1000);
