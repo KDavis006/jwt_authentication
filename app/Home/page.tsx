@@ -4,7 +4,10 @@ import {getSession, logout} from '../lib'
 export default async function Home() {
  const session = await getSession()
  const user = session?.user
- if (!user) redirect('/')
+ if (!user) { 
+  console.log("Session Timeout") 
+  redirect('/')
+ }
   return (
     <div>
      <form action={async ()=>{
