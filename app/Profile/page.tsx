@@ -1,5 +1,6 @@
 import {redirect} from 'next/navigation'
 import {getSession, logout} from '../lib'
+import person from '../../mockdata'
 
 export default async function page() {
  const session = await getSession()
@@ -11,7 +12,7 @@ export default async function page() {
   return (
     <div>
      <h1>Welcome {user.username}!</h1>
-     <h2>Name: {user.name}</h2>
+     <h2>Name: {person.first_name} {person.last_name}</h2>
      <form action={async ()=>{
       'use server'
       redirect('/Home')
