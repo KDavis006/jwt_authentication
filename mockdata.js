@@ -1,6 +1,9 @@
 const person = {
   "first_name": "Mace",
   "last_name": "Cockshott",
+  "email": "random@random.com",
+  "address": "2 Pepper Wood Pass",
+  "phone": "280-520-6152",
   "pet": "Ursus arctos",
   "avatar": "https://robohash.org/liberovelneque.png?size=100x100&set=set1",
   "car_model": "Odyssey",

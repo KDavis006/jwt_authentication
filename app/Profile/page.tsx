@@ -1,5 +1,4 @@
 import {redirect} from 'next/navigation'
-import Image from 'next/image'
 import {getSession, logout} from '../lib'
 import person from '../../mockdata'
 
@@ -12,36 +11,57 @@ export default async function page() {
  }
   return (
     <div>
-     <h1>Welcome {user.username}!</h1>
-     <h2>Name: {person.first_name} {person.last_name}</h2>
-     <img className="w-20 h-20 rounded-full" src={person.avatar} alt="Rounded avatar" />
-      <dl className="max-w-md text-gray-900 divide-y divide-gray-200 dark:text-white dark:divide-gray-700">
-        <div className="flex flex-col pb-3">
-            <dt className="mb-1 text-gray-500 md:text-lg dark:text-gray-400">Email address</dt>
-            <dd className="text-lg font-semibold">yourname@flowbite.com</dd>
+      <nav className="bg-white border-gray-200 dark:bg-gray-900">
+        <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
+          <span className="text-2xl font-semibold whitespace-nowrap dark:text-white">Home</span>
+          <div className="hidden w-full md:block md:w-auto" id="navbar-default">
+            <ul className="font-medium flex flex-col p-4 md:p-0 mt-4 border border-gray-100 rounded-lg bg-gray-50 md:flex-row md:space-x-8 rtl:space-x-reverse md:mt-0 md:border-0 md:bg-white dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700">
+              <li>
+                <form action={async ()=>{
+                  'use server'
+                  redirect('/Home')
+                }}>
+                  <button type='submit' className="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent" aria-current="page">Home</button>
+                </form>
+              </li>
+              <li>
+                <form action={async ()=>{
+                  'use server'
+                  await logout()
+                  redirect('/')
+                }}>
+                  <button type='submit' className="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent">Logout</button>
+                </form>
+              </li>
+            </ul>
+          </div>
         </div>
-        <div className="flex flex-col py-3">
-          <dt className="mb-1 text-gray-500 md:text-lg dark:text-gray-400">Home address</dt>
-          <dd className="text-lg font-semibold">92 Miles Drive, Newark, NJ 07103, California, USA</dd>
+      </nav>
+
+
+      <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 dark:bg-gray-800">
+        <h1 className="text-3xl font-bold mb-4">Welcome {user.username}!</h1>
+        <div className="max-w-md bg-white dark:bg-gray-900 shadow-md rounded-lg overflow-hidden">
+          <div className="p-6">
+            <img className="w-20 h-20 rounded-full mx-auto mb-4" src={person.avatar} alt="Rounded avatar" />
+            <h2 className="text-xl font-bold mb-2">Name: {person.first_name} {person.last_name}</h2>
+            <dl className="text-gray-900 divide-y divide-gray-200 dark:text-white dark:divide-gray-700">
+              <div className="flex flex-col py-3">
+                <dt className="mb-1 text-gray-500 md:text-lg dark:text-gray-400">Email address</dt>
+                <dd className="text-lg font-semibold">{person.email}</dd>
+              </div>
+              <div className="flex flex-col py-3">
+                <dt className="mb-1 text-gray-500 md:text-lg dark:text-gray-400">Home address</dt>
+                <dd className="text-lg font-semibold">{person.address}</dd>
+              </div>
+              <div className="flex flex-col py-3">
+                <dt className="mb-1 text-gray-500 md:text-lg dark:text-gray-400">Phone number</dt>
+                <dd className="text-lg font-semibold">{person.phone}</dd>
+              </div>
+            </dl>
+          </div>
         </div>
-        <div className="flex flex-col pt-3">
-          <dt className="mb-1 text-gray-500 md:text-lg dark:text-gray-400">Phone number</dt>
-          <dd className="text-lg font-semibold">+00 123 456 789 / +12 345 678</dd>
-        </div>
-      </dl>
-     <form action={async ()=>{
-      'use server'
-      redirect('/Home')
-     }}>
-      <button type='submit'>Home</button>
-     </form>
-     <form action={async ()=>{
-        'use server'
-        await logout()
-        redirect('/')
-      }}>
-        <button type='submit'>Logout</button>
-      </form>
+      </div>
     </div>
   )
 }
